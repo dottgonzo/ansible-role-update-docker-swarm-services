@@ -7,3 +7,17 @@
     replicas: "{{ docker_swarm_service_replicas if docker_swarm_service_replicas is defined else omit }}"
     force_update: "{{ docker_swarm_service_restart if docker_swarm_service_restart is defined else omit }}"
     resolve_image: 'yes'
+
+
+- name: "Get info from {{ docker_swarm_service_name }}"
+  docker_swarm_service_info:
+    name: "{{ docker_swarm_service_name }}"
+  register: docker_swarm_service_info_result
+  until: docker_swarm_service_info_result.service.UpdateStatus.State == 'completed'
+  retries: 100
+  delay: 5
+
+
+
+- debug:
+  msg: "{{ docker_swarm_service_info_result.service.UpdateStatus }}"
