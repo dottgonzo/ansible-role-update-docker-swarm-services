@@ -20,4 +20,4 @@
 
 
 - debug:
-  msg: "{{ docker_swarm_service_info_result.service.UpdateStatus }}"
+    msg: "{{ docker_swarm_service_info_result.service.UpdateStatus }}"
